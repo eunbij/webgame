@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>끝말잇기</title>
+</head>
+<body>
+    <div>
+        <span id="order">1</span>번째 참가자
+    </div>
+    <div>제시어 : <span id="word"></span></div>
+    <input type="text">
+    <button>입력</button>
+    <script>
+/*         // 1) 입력받은 값 변수에 저장
+        const number = prompt('몇 명이 참가하나요?');
+        console.log(number);
+
+        // button 태그에 이벤트 달기
+        const onClickButton = ()=>{
+            console.log('버튼 클릭');
+        };
+        const $button = document.querySelector('button'); //HTML 태그 가져오기
+        console.log($button);
+        $button.addEventListener('click',onClickButton);
+        // onClickButton은 콜백 함수 = 특정 작업이 실행되고 난 뒤에 추가로 실행되는 함수를 의미 | 버튼을 클릭한 후 추가적으로 실행되므로
+        
+        // input 태그에 이벤트 달기
+        const onInput = (event) => {
+            console.log('글자 입력', event.target.value);
+        };
+        const $input = document.querySelector('input'); //HTML 태그 가져오기
+        console.log($input);
+        $input.addEventListener('input',onInput);
+ */
+        // 순서도에 맞추에 코드 재정렬
+/*         const number = Number(prompt('몇 명이 참가하나요?'));
+        const $button = document.querySelector('button');
+        const $input = document.querySelector('input');
+        const $word = document.querySelector('#word');
+        const $order = document.querySelector('#order');
+        let word; //제시어
+        let newWord; // 현재 단어
+
+        const onClickButton = ()=>{
+            if(!word){ //제시어가 비어 있는가?
+                //비어 있음
+                word = newWord; // 입력한 단어가 제시어가 됨
+                $word.textContent = word; // 화면에 제시어 표시
+                const order = Number($order.textContent);
+                if(order+1 > number){
+                    $order.textContent = 1;
+                }else{
+                    $order.textContent = order+1;
+                }
+                $input.value = '';
+                $input.focus();
+            }else{
+                //비어있지 않음
+                if(word[word.length-1]===newWord[0]){ // 입력한 단어가 올바른가?
+                    //올바름
+                    word = newWord; //현재 단어를 제시어에 저장
+                    $word.textContent = word; // 화면에 제시어 표시
+                    const order = Number($order.textContent);
+                    if(order+1 > number){
+                        $order.textContent =1;
+                    }else{
+                        $order.textContent = order + 1;
+                    }
+                    $input.value = '';
+                    $input.focus();
+                }else{
+                    //올바르지 않음
+                    alert('올바르지 않은 단어입니다!');
+                    $input.value = '';
+                    $input.focus();
+                };
+            }
+        };
+        const onInput = (event)=>{
+            newWord = event.target.value; // 입력하는 단어를 현재 단어로
+        };
+
+        $button.addEventListener('click',onClickButton);
+        $input.addEventListener('input',onInput);
+ */
+
+        // 최적화한 순서도를 코드에 반영하기
+        const number = Number(prompt('몇 명이 참가하나요?'));
+        const $button = document.querySelector('button');
+        const $input = document.querySelector('input');
+        const $word = document.querySelector('#word');
+        const $order = document.querySelector('#order');
+        let word; //제시어
+        let newWord; // 현재 단어
+
+        const onClickButton = ()=>{
+            if(!word ||word[word.length-1]===newWord[0] ){ //제시어가 비어 있거나 입력한 단어가 올바른가?
+                //비어 있음
+                word = newWord; // 입력한 단어가 제시어가 됨
+                $word.textContent = word; // 화면에 제시어 표시
+                const order = Number($order.textContent);
+                if(order+1 > number){
+                    $order.textContent = 1;
+                }else{
+                    $order.textContent = order+1;
+                }
+            }else{
+                //올바르지 않음
+                alert('올바르지 않은 단어입니다!');
+            }
+            $input.value = '';
+            $input.focus();
+        };
+        const onInput = (event)=>{
+            newWord = event.target.value; // 입력하는 단어를 현재 단어로
+        };
+
+        $button.addEventListener('click',onClickButton);
+        $input.addEventListener('input',onInput);
+    </script>
+</body>
+</html>
