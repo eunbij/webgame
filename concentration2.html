@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>카드 짝 맞추기</title>
+    <style>
+        .card {
+            display: inline-block;
+            margin-right: 20px;
+            margin-bottom: 20px;
+            width: 70px;
+            height: 100px;
+            perspective: 140px;
+        }
+        .card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.8s;
+            transform-style: preserve-3d;
+        }
+        .card.flipped .card-inner {
+            transform: rotateY(180deg);
+        }
+        .card-front {
+            background: navy;
+        }
+        .card-front, .card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border: 1px solid #000;
+            backface-visibility: hidden;
+        }
+        .card-back {
+            transform: rotateY(180deg);
+        }
+    </style>
+</head>
+<body>
+    <div id="wrapper"></div>
+    <script>
+        const $wrapper = document.querySelector('#wrapper');
+
+        const total = 12;
+        const imgSrc = [
+            './images/card1.png', './images/card1.png',
+            './images/card2.png', './images/card2.png',
+            './images/card3.png', './images/card3.png',
+            './images/card4.png', './images/card4.png',
+            './images/card5.png', './images/card5.png',
+            './images/card6.png', './images/card6.png'
+        ];
+        // let imgCopy = imgSrc.concat(imgSrc);
+        let imgs = [];
+        function shuffle2(){
+            for(let i=0; imgSrc.length; i++){
+                const randomImgs = Math.floor(Math.random()*imgSrc.length);
+                shuffled2 = shuffled2.concat(imgSrc.splice(randomImgs ,1));
+            }
+        }
+        function createImg(i){
+            const imgCard = document.createElement('div');
+            imgCard.className = 'imgCard';
+            const imgInner = document.createElement('div');
+            imgInner.className = 'img-inner';
+            const imgFront = document.createElement('div');
+            imgFront.className = 'img-front';
+            const imgBack = document.createElement('div');
+            imgBack.className = 'img-back';
+            imgBack.style.backgroundImage = "url('" + imgs[i] + "')";
+            imgBack.style.backgroundSize = 'cover';
+            imgInner.appendChild(imgFront);
+            imgInner.appendChild(imgBack);
+            imgCard.appendChild(imgInner);
+            return imgCard;
+
+        }
+        function startGame2(){
+            shuffle2();
+            for(let i=0; i<total; i+=1){
+                const imgCard = createImg(i);
+                $wrapper.appendChild(imgCard);
+            }
+        }
+        startGame2();
+
+        /* 카드 잠깐 보여줬다 뒤집기 */
+        document.querySelectorAll('.card').forEach((imgCard, index)=>{
+            //초반 카드 공개
+            setTimeout(() => {
+                imgCard.classList.add('flipped');
+            }, 1000+100*index);
+        });
+        setTimeout(() => {
+            //카드 감추기
+            document.querySelectorAll('.card').forEach((imgCard) => {
+                card.classList.remove('flipped');
+            });
+        }, 5000);
+    </script>
+</body>
+</html>
