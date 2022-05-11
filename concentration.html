@@ -100,10 +100,12 @@
                 return;
             }
             // 두 카드가 다르면
+            clickable = false;
             setTimeout(() => {
                 clicked[0].classList.remove('flipped');
                 clicked[1].classList.remove('flipped');
                 clicked = [];
+                clickable = true;
             }, 500);
         } 
 
