@@ -50,6 +50,8 @@
         let colorCopy = colors.concat(colors);
         let shuffled = [];
         let clicked = []; // 클릭한 카드 배열 변수 선언
+        let completed = []; // 완료 배열 변수 선언
+        let clickable = false; // 클릭 가능 여부 확인 변수 선언
         
         function shuffle(){
             // 피셔-예이츠 셔플
@@ -74,6 +76,9 @@
             return card;
         }
         function onClickCard(){ // 카드 태그 이벤트 리스너 추가
+            if(!clickable || completed.includes(this) || clicked[0] === this){
+                return;
+            }
             this.classList.toggle('flipped');
             clicked.push(this);
             if(clicked.length!==2){
@@ -82,9 +87,24 @@
             const firstBackColor = clicked[0].querySelector('.card-back').style.backgroundColor;
             const secondBackColor = clicked[1].querySelector('.card-back').style.backgroundColor;
             if(firstBackColor === secondBackColor){ // 두 카드가 같은 카드면
+                completed.push(clicked[0]);
+                completed.push(clicked[1]);
+                clicked = [];
+                if(completed.length !== total){
+                    return;
+                }
+                setTimeout(() => {
+                    alert(`축하합니다!`);
+                    resetGame();
+                }, 1000);
                 return;
             }
             // 두 카드가 다르면
+            setTimeout(() => {
+                clicked[0].classList.remove('flipped');
+                clicked[1].classList.remove('flipped');
+                clicked = [];
+            }, 500);
         } 
 
         function startGame(){
@@ -95,23 +115,34 @@
                 card.addEventListener('click',onClickCard);
                 $wrapper.appendChild(card);
             }
+            /* 카드 잠깐 보여줬다 뒤집기 */
+            document.querySelectorAll('.card').forEach((card, index)=>{
+                //초반 카드 공개
+                setTimeout(() => {
+                    card.classList.add('flipped');
+                }, 1000+100*index);
+            });
+            setTimeout(() => {
+                //카드 감추기
+                document.querySelectorAll('.card').forEach((card) => {
+                    card.classList.remove('flipped');
+                });
+                clickable = true;
+            }, 5000);
         }
+        
+        function resetGame(){
+            $wrapper.innerHTML = '';
+            colorCopy = colors.concat(colors);
+            shuffled = [];
+            completed = [];
+            clickable = false;
+            startGame();
+        };
+
         startGame();
 
-        /* 카드 잠깐 보여줬다 뒤집기 */
-        document.querySelectorAll('.card').forEach((card, index)=>{
-            //초반 카드 공개
-            setTimeout(() => {
-                card.classList.add('flipped');
-            }, 1000+100*index);
-        });
-        setTimeout(() => {
-            //카드 감추기
-            document.querySelectorAll('.card').forEach((card) => {
-                card.classList.remove('flipped');
-            });
-        }, 5000);
-
+        
 
     </script>
 </body>
