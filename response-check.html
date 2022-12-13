@@ -57,6 +57,7 @@
                 records.push(current);
                 const average = records.reduce((a, c) => a + c) / records.length;
                 $result.textContent = `현재 ${current}ms, 평균: ${average}ms`;
+                //bonus. 상위 5위 속도 순으로 정렬하기
                 const topFive = records.sort((p, c) => p - c).slice(0, 5);
                 topFive.forEach((top, index)=>{
                     $result.append(
