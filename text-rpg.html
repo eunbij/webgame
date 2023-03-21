@@ -106,6 +106,22 @@
 
             }
         });
+
+        $battleMenu.addEventListener('submit', (event)=>{
+            event.preventDefault();
+            const input = event.target['battle-input'].value;
+            if(input==='1'){
+                hero.attack(monster);
+                monster.attack(hero);
+                $heroHp.textContent = `HP : ${hero.hp}/${hero.maxHp}`;
+                $mosterHp.textContent = `HP : ${monster.hp}/${monster.maxHp}`;
+                $message.textContent = `${hero.att}의 데미지를 주고, ${monster.att}의 데미지를 받았다.`;
+            }else if(input==='2'){
+
+            }else if(input==='3'){
+
+            };
+        });
     </script>
 </body>
 </html>
